@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>忘记密码 - layuiAdmin</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" th:href="@{'/layuiadmin/layui/css/layui.css'}" media="all">
+    <link rel="stylesheet" th:href="@{'/layuiadmin/style/admin.css'}" media="all">
+    <link rel="stylesheet" th:href="@{'/layuiadmin/style/login.css'}" media="all">
+</head>
+
+<div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
+    <div class="layadmin-user-login-main">
+        <div class="layadmin-user-login-box layadmin-user-login-header">
+            <h2>layuiAdmin</h2>
+            <p>layui 官方出品的单页面后台管理模板系统</p>
+        </div>
+        <div class="layadmin-user-login-box layadmin-user-login-body layui-form" lay-filter="example">
+            <div class="layui-form-item">
+                <label class="layadmin-user-login-icon layui-icon layui-icon-cellphone"
+                       for="LAY-user-login-cellphone"></label>
+                <input type="text" name="cellphone" required id="LAY-user-login-cellphone" lay-verify="phone|requeir"
+                       placeholder="请输入注册时的手机号" class="layui-input">
+            </div>
+            <div class="layui-form-item">
+                <label class="layadmin-user-login-icon layui-icon layui-icon-email"
+                       for="LAY-user-login-email"></label>
+                <input type="text" name="email" id="LAY-user-login-email" lay-verify="email"
+                       placeholder="请输入注册时的邮箱地址" class="layui-input">
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-row">
+                    <div class="layui-col-xs7">
+                        <label class="layadmin-user-login-icon layui-icon layui-icon-vercode"
+                               for="LAY-user-login-smscode"></label>
+                        <input type="text" name="vercode" id="LAY-user-login-smscode" lay-verify="required"
+                               placeholder="短信验证码" class="layui-input">
+                    </div>
+                    <div class="layui-col-xs5">
+                        <div style="margin-left: 10px;">
+                            <button type="button" class="layui-btn layui-btn-primary layui-btn-fluid"
+                                    id="LAY-user-getemcode">获取验证码
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layadmin-user-login-icon layui-icon layui-icon-password"
+                       for="LAY-user-login-password"></label>
+                <input type="password" name="password" id="LAY-user-login-password"  lay-verify="pass|requeir" placeholder="新密码"
+                       class="layui-input">
+            </div>
+            <div class="layui-form-item">
+                <label class="layadmin-user-login-icon layui-icon layui-icon-password"
+                       for="LAY-user-login-repass"></label>
+                <input type="password" name="repass" id="LAY-user-login-repass" lay-verify="required" placeholder="确认密码"
+                       class="layui-input">
+            </div>
+            <div class="layui-form-item">
+                <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="LAY-user-forget-resetpass">重置新密码
+                </button>
+            </div>
+            <div class="layui-form-item">
+                <a th:href="@{/user/}" class="layui-btn layui-btn-fluid">前往登录
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-trans layadmin-user-login-footer">
+
+        <p>© 2018 <a href="http://www.layui.com/" target="_blank">layui.com</a></p>
+        <p>
+            <span><a href="http://www.layui.com/admin/#get" target="_blank">获取授权</a></span>
+            <span><a href="http://www.layui.com/admin/pro/" target="_blank">在线演示</a></span>
+            <span><a href="http://www.layui.com/admin/" target="_blank">前往官网</a></span>
+        </p>
+    </div>
+
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.5.0/jquery.min.js"></script>
+<script th:src="@{'/layuiadmin/layui/layui.js'}"></script>
+<script>
+    layui.config({
+        base: '../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'user'], function () {
+        var $ = layui.$
+            , setter = layui.setter
+            , admin = layui.admin
+            , form = layui.form
+            , router = layui.router();
+
+        form.render();
+
+        let timeToGet = 60;
+
+        $("#LAY-user-getemcode").on('click', function () {
+
+            // 检测手机号的输入
+            let PhoneNum = $("#LAY-user-login-cellphone").val();
+            if(PhoneNum.length != 11) {
+                layer.msg('请输入注册时绑定的手机号码',{icon:2})
+            }
+
+            // 按钮禁用后还能点击
+            let btn = this;
+            // console.log("btn -> ", btn);
+
+            $("#LAY-user-getemcode").addClass('layui-btn-disabled');
+            btn.disabled = true;
+            var time = 60;//定义时间变量。用于倒计时用
+            var timer = null;//定义一个定时器；
+            timer = setInterval(function(){///开启定时器。函数内执行
+                // console.log(btn.innerText);
+                btn.innerText = time+"秒后重新发送";    //点击发生后，按钮的文本内容变成之前定义好的时间值。
+                time--;//时间值自减
+                if(time ==0){     //判断,当时间值小于等于0的时候
+                    btn.innerText='重新发送验证码'; //其文本内容变成……点击重新发送……
+                    btn.disabled = false;
+                    $("#LAY-user-getemcode").removeClass('layui-btn-disabled');
+                    clearInterval(timer); //清除定时器
+                }
+            },1000)
+
+            /**
+             * 发送邮件
+             */
+            $.ajax({
+                url: '/user/userForget',
+                type: 'POST',
+                data: {
+                    'cellphone': $("#LAY-user-login-cellphone").val(),
+                },
+                success: function (res) {
+                    if (res.code == 100) {
+                        layer.msg(res.extend.msg, {time: 3, icon: 1});
+                    }
+                }
+            })
+
+        })
+
+        // //表单赋值
+        // layui.$('#LAY-component-form-setval').on('click', function () {
+        //     console.log("form ->", this.form);
+        //     form.val('example', {
+        //         "cellphone": "17754147238" // "name": "value"
+        //         , "email": "772245385@qq.com"
+        //         , "password": "123456"
+        //         , "repass": "123456"
+        //     });
+        // });
+
+        //重置密码
+        form.on('submit(LAY-user-forget-resetpass)', function (obj) {
+            var field = obj.field;
+            console.log("field -> ", field);
+
+            //确认密码
+            if (field.password !== field.repass) {
+                return layer.msg('两次密码输入不一致');
+            }
+
+            let ajaxCode = 0;
+
+            //请求接口
+            $.ajax({
+                url: '/user/doForget' //实际使用请改成服务端真实接口
+                , type: 'POST'
+                , data: field
+                ,async: false
+                , success: function (res) {
+                    if(res.code == 100){
+                        ajaxCode = 100;
+                    }else if(res.code == 200){
+                        layer.msg('修改密码失败',{time:2,icon:5});
+                    }
+                }
+            });
+
+            if(ajaxCode == 100){
+                layer.msg('修改密码成功,正在跳转至登陆页面',{time:2,icon:1},function () {
+                    window.location.href = "/user/";
+                });
+            }
+
+            return false;
+        });
+
+    });
+</script>
+</body>
+</html>

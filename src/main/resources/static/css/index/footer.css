@@ -1,0 +1,184 @@
+.fotterItem {
+	background-color: #f6f9fa;
+}
+
+.fotter_top {
+	height: 200px;
+	color: #CCCCCC;
+	background-color: #464646;
+}
+
+.fotter_bottom {
+	height: 60px;
+	background-color: #2a2a2a;
+}
+
+/* a标签的动画 */
+.fotter_top a {
+	color: #ccc;
+	transition: color 0.3s;
+}
+
+.fotter_top a:hover {
+	text-decoration: none;
+	color: #00A1D6;
+}
+
+.flex_container {
+	margin: 0 auto;
+	font-size: 12px;
+	display: flex;
+	justify-content: space-between;
+	min-width: 999px;
+	margin: 0 auto;
+}
+
+.link-item {
+	flex: 1;
+	padding-right: 40px;
+	margin-right: 40px;
+}
+
+.fotter_top * {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+.bt {
+	font-size: 16px;
+	color: #999;
+	display: block;
+	height: 20px;
+	margin-bottom: 20px;
+}
+
+
+/* a容器内部 */
+.a_content {
+	width: 80%;
+	height: 80%;
+	padding: 10% 0px;
+	margin: 0 auto;
+}
+
+.b_content {
+	width: 80%;
+	height: 80%;
+	padding: 10% 0px;
+	margin: 0 auto;
+}
+
+.c_content {
+	width: 80%;
+	height: 80%;
+	padding: 10% 0px;
+	margin: 0 auto;
+}
+
+.link-item ul {
+	list-style: none;
+	height: 96px;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+}
+
+.link-item:nth-child(1) ul {
+	border-right: 1px dashed #eee;
+}
+
+.link-item:nth-child(2) ul {
+	border-right: 1px dashed #eee;
+}
+
+.link-item ul a {
+	display: inline-block;
+	margin-bottom: 10px;
+	cursor: pointer;
+}
+
+.c_content ul span {
+	color: #000000;
+}
+
+.c_content sapn {
+	color: #000000;
+}
+
+.fotterText {
+	line-height: 60px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.fotter_bottom span {
+	width: 100%;
+}
+
+.fotter_bottom a {
+	color: red;
+}
+
+.fotter_top_sm{
+	display: none;
+}
+
+
+/* 小窗下显示此底部 */
+@media screen and (max-width: 578px) {
+	.flex_container{
+		display: none;
+	}
+	
+	.fotter_top_sm{
+		display: block;
+		width: 100%;
+		background-color: #464646;
+		text-align: center;
+		
+	}
+} 
+
+
+/* 设置表格偶数行颜色 */
+.table_css tr:nth-child(even){
+	background-color: #FFFFFF;
+}
+
+.tableT{
+	font-size: 24px;
+	color: #999;
+	display: block;
+	height: 20px;
+	margin-bottom: 20px;
+}
+
+/*手机端自适应窗口*/
+@media (max-width: 767px) {
+	body{
+		margin: 0;
+		padding: 0;
+	}
+	html，body{overfow-x:hidden;}
+}
+
+@media (max-width: 970px) {
+
+	html，body{overfow-x:hidden;}
+	body{
+		margin: 0;
+		padding: 0;
+	}container-fluid
+
+}
+
+@media (max-width: 480px) {
+	html，body{overfow-x:hidden;}
+	body{
+		margin: 0;
+		padding: 0;
+	}container-fluid
+
+}
+

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>注册 - layuiAdmin</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" th:href="@{'/layuiadmin/layui/css/layui.css'}" media="all">
+    <link rel="stylesheet" th:href="@{'/layuiadmin/style/admin.css'}" media="all">
+    <link rel="stylesheet" th:href="@{'/layuiadmin/style/login.css'}" media="all">
+</head>
+<body>
+
+
+<div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
+    <div class="layadmin-user-login-main">
+        <div class="layadmin-user-login-box layadmin-user-login-header">
+            <h2>layuiAdmin</h2>
+            <p>layui 官方出品的单页面后台管理模板系统</p>
+        </div>
+        <form class="layadmin-user-login-box layadmin-user-login-body layui-form" lay-filter="example">
+            <div class="layui-form-item">
+                <label class="layadmin-user-login-icon layui-icon layui-icon-cellphone"
+                       for="LAY-user-login-cellphone"></label>
+                <input type="text" name="cellphone" id="LAY-user-login-cellphone" lay-verify="phone" placeholder="手机"
+                       class="layui-input">
+            </div>
+            <div class="layui-form-item">
+                <label class="layadmin-user-login-icon layui-icon layui-icon-email"
+                       for="LAY-user-login-email"></label>
+                <input type="text" name="email" id="LAY-user-login-email" lay-verify="email" placeholder="邮箱"
+                       class="layui-input">
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-row">
+                    <div class="layui-col-xs7">
+                        <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="LAY-user-login-vercode"></label>
+                        <input type="text" name="vercode" id="LAY-user-login-vercode" lay-verify="required" placeholder="图形验证码" class="layui-input">
+                    </div>
+                    <div class="layui-col-xs5">
+                        <div style="margin-left: 10px;">
+                            <img src="/verifycode/get" class="layadmin-user-login-codeimg" id="LAY-user-get-vercode">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layadmin-user-login-icon layui-icon layui-icon-username"
+                       for="LAY-user-login-nickname"></label>
+                <input type="text" name="username" id="LAY-user-login-nickname" lay-verify="nickname" placeholder="用户名"
+                       class="layui-input">
+            </div>
+            <div class="layui-form-item">
+                <label class="layadmin-user-login-icon layui-icon layui-icon-password"
+                       for="LAY-user-login-password"></label>
+                <input type="password" name="password" id="LAY-user-login-password" lay-verify="pass" placeholder="密码"
+                       class="layui-input">
+            </div>
+            <div class="layui-form-item">
+                <label class="layadmin-user-login-icon layui-icon layui-icon-password"
+                       for="LAY-user-login-repass"></label>
+                <input type="password" name="repass" id="LAY-user-login-repass" lay-verify="required" placeholder="确认密码"
+                       class="layui-input">
+            </div>
+            <div class="layui-form-item">
+                <input type="checkbox" name="agreement" lay-skin="primary" title="同意用户协议" checked>
+            </div>
+
+            <div class="layui-form-item">
+<!--                <button type="button" class="layui-btn layui-btn-normal" id="LAY-component-form-setval">赋值</button>-->
+                <button type="button" class="layui-btn layui-btn-fluid" lay-submit lay-filter="LAY-user-reg-submit">注
+                    册
+                </button>
+            </div>
+            <div class="layui-trans layui-form-item layadmin-user-login-other">
+                <label>社交账号注册</label>
+                <a href="javascript:;"><i class="layui-icon layui-icon-login-qq"></i></a>
+                <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>
+                <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>
+
+                <a th:href="@{/user/}" class="layadmin-user-jump-change layadmin-link layui-hide-xs">用已有帐号登入</a>
+                <a th:href="@{/user/doLogin}"
+                   class="layadmin-user-jump-change layadmin-link layui-hide-sm layui-show-xs-inline-block">登入</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="layui-trans layadmin-user-login-footer">
+
+        <p>© 2018 <a href="http://www.layui.com/" target="_blank">layui.com</a></p>
+        <p>
+            <span><a href="http://www.layui.com/admin/#get" target="_blank">获取授权</a></span>
+            <span><a href="http://www.layui.com/admin/pro/" target="_blank">在线演示</a></span>
+            <span><a href="http://www.layui.com/admin/" target="_blank">前往官网</a></span>
+        </p>
+    </div>
+
+</div>
+
+<script src="https://cdn.bootcss.com/jquery/3.5.0/jquery.min.js"></script>
+<script th:src="@{'/layuiadmin/layui/layui.js'}"></script>
+<script>
+
+    $("#LAY-user-get-vercode").click(function () {
+        this.src = '/verifycode/get?data=' + new Date().getTime();
+    }).click().show();
+
+    layui.config({
+        base: '../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'user'], function () {
+        var $ = layui.$
+            , setter = layui.setter
+            , admin = layui.admin
+            , form = layui.form
+            , router = layui.router();
+
+        form.render();
+
+        //表单赋值
+        layui.$('#LAY-component-form-setval').on('click', function(){
+            console.log("form ->" , this.form);
+            form.val('example', {
+                "username": "wrzzxc" // "name": "value"
+                ,"password": "123456"
+                ,"cellphone":"12345678901"
+                ,"email": "1@qq.com"
+                ,"repass": "123456"
+            });
+        });
+
+        //提交
+        form.on('submit(LAY-user-reg-submit)', function (obj) {
+            var field = obj.field;
+
+            var ajaxCodeNum = 0;
+
+            //确认密码
+            if (field.password !== field.repass) {
+                return layer.msg('两次密码输入不一致');
+            }
+
+            //是否同意用户协议
+            if (!field.agreement) {
+                return layer.msg('你必须同意用户协议才能注册');
+            }
+
+            //请求接口
+            $.ajax({
+                url: '/user/userReg',
+                type: 'POST',
+                async:false,
+                data: {
+                    'username': field.username,
+                    'password': field.password,
+                    'email': field.email,
+                    'cellphone': field.cellphone,
+                    'code': field.vercode
+                },
+                success: function (res) {
+                    if(res.code == 100) {
+                        console.log("successs : res ->" , res);
+                        ajaxCodeNum = 100;
+                    }else if(res.code == 200) {
+                        console.log("error : res ->" , res);
+                        if(res.extend.mc_msg != null) {
+                            layer.msg(res.extend.mc_msg,{time: 2000, icon: 5});
+                        }else{
+                            ajaxCodeNum = 200;
+                        }
+                    }
+                }
+            })
+
+            console.log("ajaxCodeNum -> ",ajaxCodeNum);
+            if(ajaxCodeNum == 100){
+                layer.msg("注册成功，正在跳转至登陆页面...", {icon: 1, time: 1000}, function () {
+                    window.location.href = '/user/';
+                })
+            }
+
+            return false;
+        });
+    });
+</script>
+</body>
+</html>
