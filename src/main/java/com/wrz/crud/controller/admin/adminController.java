@@ -30,13 +30,5 @@ public class adminController {
         return "admin/console/consolePage";
     }
 
-    /**
-     * 跳转到任务管理页面
-     */
-    @RequestMapping("/makeword")
-    public String toMakeWord() {
-
-        return "admin/work/makework";
-    }
 
 }

@@ -83,6 +83,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         return null;
     }
 
+    /**
+     * 查询所有人员信息
+     */
+    @Override
+    public List<SysUser> selectAll() {
+
+        List<SysUser> sysUsersList = sysUserMapper.selectList(null);
+
+        return sysUsersList;
+    }
+
 
     /**
      * 通过手机号码找到邮箱地址

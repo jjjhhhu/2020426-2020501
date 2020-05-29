@@ -24,4 +24,6 @@ public interface ISysUserService extends IService<SysUser> {
     SysUser changePassword(String email,String password);
 
     SysUser findByEmail(String email);
+
+    List<SysUser> selectAll();
 }

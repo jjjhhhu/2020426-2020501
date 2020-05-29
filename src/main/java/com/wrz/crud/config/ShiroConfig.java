@@ -50,6 +50,7 @@ public class ShiroConfig {
         Map<String, String> filterMap = new LinkedHashMap<String, String>();
 
         // 静态资源放行
+        filterMap.put("/assets/**", "anon");
         filterMap.put("/css/**","anon");
         filterMap.put("/js/**", "anon");
         filterMap.put("/layuiadmin/**", "anon");
@@ -57,11 +58,18 @@ public class ShiroConfig {
         // 放行页面：登陆、执行登录、注册、执行注册、找回密码相关
         filterMap.put("/user/**", "anon");
 
+        // jquery模板放行
+        filterMap.put("/model/**", "anon");
+
+        // 后台放行
+        filterMap.put("/admin/**", "anon");
+
+
         // 获取验证码放行
         filterMap.put("/verifycode/get", "anon");
 
         // 授权过滤器
-        filterMap.put("/admin/**", "perms[admin]");
+//        filterMap.put("/admin/**", "perms[admin]");
 
 
         // 退出登录
